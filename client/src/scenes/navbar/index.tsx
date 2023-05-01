@@ -8,6 +8,7 @@ type Props = {}
 
 const Navbar = (props: Props) => {
     const { palette } = useTheme();
+    const [isSelect, setIsSelect] = useState("Dashboard")
     return (
         <FlexBetween mb="0.25rem" p="0.5rem 0rem" color={palette.grey[300]}>
             {/* LEFT*/}
@@ -18,6 +19,26 @@ const Navbar = (props: Props) => {
                 </Typography>
             </FlexBetween>
             {/* RIGHT */}
+            <FlexBetween gap="2rem">
+                <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
+                    <Link
+                        to="/"
+                        onClick={() => setIsSelect("dashboard")}
+                        style={{ color: isSelect === "dashboard" ? "inherit" : palette.grey[700], textDecoration: "inherit" }}
+                    >
+                        Dashboard
+                    </Link>
+                </Box>
+                <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
+                    <Link
+                        to="/predictions"
+                        onClick={() => setIsSelect("predictions")}
+                        style={{ color: isSelect === "predictions" ? "inherit" : palette.grey[700], textDecoration: "inherit" }}
+                    >
+                        Predictions
+                    </Link>
+                </Box>
+            </FlexBetween>
         </FlexBetween>
     )
 }
