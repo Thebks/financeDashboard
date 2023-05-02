@@ -6,18 +6,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "@/scenes/navbar";
 import Dashboard from "@/scenes/dashboard";
 
-const gridTemplateLargeScreens = `
-"a b c"
-"a b c"
-"a b c"
-"a b f"
-"d e f"
-"d e f"
-"d h i"
-"g h i"
-"g h j"
-"g h j"
-`
 
 function App() {
   const theme = useMemo(() => createTheme(themeSettings), []);
