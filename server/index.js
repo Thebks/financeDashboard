@@ -5,6 +5,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import helmet from "helmet"
 import morgan from "morgan"
+import kpiRoutes from "./routes/kpi.js"
 
 // Middleware functions
 
@@ -20,7 +21,11 @@ app.use(cors());
 
 console.log("Yes its Working")
 console.log("Check again")
+
 // ROUTES
+app.use(("./kpi", kpiRoutes))
+
+// DB setup
 
 const PORT = process.env.PORT || 7000;
 mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
