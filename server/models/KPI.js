@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import { loadType } from "mongoose-currency";
 
-const Schema = mongoose.Schema;
+// const Schema = mongoose.Schema;
 loadType(mongoose);
 
-const daySchema = new Schema(
+const daySchema = new mongoose.Schema(
     {
         date: String,
         revenue: {
@@ -21,7 +21,7 @@ const daySchema = new Schema(
     { toJSON: { getters: true } }
 );
 
-const monthSchema = new Schema(
+const monthSchema = new mongoose.Schema(
     {
         month: String,
         revenue: {
@@ -48,7 +48,7 @@ const monthSchema = new Schema(
     { toJSON: { getters: true } }
 );
 
-const KPISchema = new Schema(
+const KPISchema = new mongoose.Schema(
     {
         totalProfit: {
             type: mongoose.Types.Currency,

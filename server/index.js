@@ -1,5 +1,4 @@
 import express from "express"
-// import bodyParser from "body-parser"
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors"
@@ -22,24 +21,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-// console.log("Yes its Working")
-// console.log("Check again")
 
 // ROUTES
-// app.use("./kpi", kpiRoutes)
+
+
 app.use("/kpi", kpiRoutes);
 
 // DB setup
 
-// const PORT = process.env.PORT || 7000;
-// mongoose.connect(process.env.MONGO_DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-//     .then(async () => {
-//         app.listen(PORT, () => console.log(`Server Port ${PORT}`))
-//         // ADD DATA HERE ONE BY ONE 
-//         // await mongoose.connection.db.dropDatabase();
-//         // KPI.insertMany(kpis);
-//     })
-//     .catch((error) => console.log(`${error} did not connect`))
 
 const PORT = process.env.PORT || 7000;
 mongoose
@@ -49,5 +38,8 @@ mongoose
     })
     .then(async () => {
         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+        console.log("dick");
+        // await mongoose.connection.db.dropDatabase();
+        // KPI.insertMany(kpis)
     })
     .catch((error) => console.log(`${error} did not connect`));
