@@ -22,6 +22,18 @@ const Row1 = () => {
         )
     }, [data])
 
+    // try {
+    //     const theElement = document.getElementById('colorRevenue') as Element | null
+
+    //     if (theElement) {
+    //         const colorR = window.getComputedStyle(theElement);
+    //         console.log(colorR);
+    //     }
+    // } catch (error) {
+    //     console.log(error)
+    // }
+
+
     return (
         <>
             <DashboardBox gridArea="a">
@@ -37,11 +49,12 @@ const Row1 = () => {
                             bottom: 0,
                         }}
                     >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
+                        <CartesianGrid strokeDasharray="1 1" />
+                        <XAxis dataKey="name" style={{ fontSize: "10px" }} />
+                        <YAxis axisLine={{ strokeWidth: "0" }} style={{ fontSize: "10px" }} domain={[3000, 23000]} ticks={[3000, 5000, 8000, 11000, 14000, 17000, 20000, 23000]} />
                         <Tooltip />
-                        <Area type="monotone" dataKey="revenue" stroke={palette.primary.main} fillOpacity={1} fill="url(#colorRevenue)" />
+                        <Area type="monotone" dataKey="revenue" dot={true} stroke={palette.primary.main} fillOpacity={1} fill="url(#colorRevenue)" />
+                        <Area type="monotone" dataKey="expenses" dot={true} stroke={palette.primary.main} fillOpacity={1} fill="url(#colorExpenses)" />
                     </AreaChart>
                 </ResponsiveContainer>
             </DashboardBox>
