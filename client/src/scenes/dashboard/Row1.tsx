@@ -22,16 +22,16 @@ const Row1 = () => {
         )
     }, [data])
 
-    // try {
-    //     const theElement = document.getElementById('colorRevenue') as Element | null
+    try {
+        const theElement = document.getElementById('colorRevenue') as Element | null
 
-    //     if (theElement) {
-    //         const colorR = window.getComputedStyle(theElement);
-    //         console.log(colorR);
-    //     }
-    // } catch (error) {
-    //     console.log(error)
-    // }
+        if (theElement) {
+            const colorR = window.getComputedStyle(theElement);
+            console.log(colorR);
+        }
+    } catch (error) {
+        console.log(error)
+    }
 
 
     return (
@@ -49,6 +49,12 @@ const Row1 = () => {
                             bottom: 0,
                         }}
                     >
+                        <defs>
+                            <linearGradient id="colorRevenue" x1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor={palette.primary[400]} stopOpacity={0.5} />
+                                <stop offset="95%" stopColor={palette.primary[400]} stopOpacity={0} />
+                            </linearGradient>
+                        </defs>
                         <CartesianGrid strokeDasharray="1 1" />
                         <XAxis dataKey="name" style={{ fontSize: "10px" }} />
                         <YAxis axisLine={{ strokeWidth: "0" }} style={{ fontSize: "10px" }} domain={[3000, 23000]} ticks={[3000, 5000, 8000, 11000, 14000, 17000, 20000, 23000]} />
