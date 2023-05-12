@@ -1,8 +1,9 @@
+import BoxHeader from '@/components/BoxHeader';
 import DashboardBox from '@/components/DashboardBox';
 import { useGetKpisQuery } from '@/state/api';
 import { useTheme } from '@mui/material';
 import { useMemo } from 'react';
-import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area } from 'recharts';
+import { ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area, Line, LineChart, Legend, Bar, BarChart } from 'recharts';
 
 
 const Row1 = () => {
@@ -17,6 +18,29 @@ const Row1 = () => {
                     name: month.substring(0, 3),
                     revenue: revenue,
                     expenses: expenses
+                }
+            })
+        )
+    }, [data])
+
+    const profitRevenueData = useMemo(() => {
+        return (
+            data && data[0].monthlyData.map(({ month, revenue, expenses }) => {
+                return {
+                    name: month.substring(0, 3),
+                    revenue: revenue,
+                    profit: revenue - expenses
+                }
+            })
+        )
+    }, [data])
+
+    const revenueData = useMemo(() => {
+        return (
+            data && data[0].monthlyData.map(({ month, revenue }) => {
+                return {
+                    name: month.substring(0, 3),
+                    revenue: revenue,
                 }
             })
         )
@@ -37,22 +61,27 @@ const Row1 = () => {
     return (
         <>
             <DashboardBox gridArea="a">
+                <BoxHeader title="Revenue Expenses" subtitle="This is a subtitle" sideText="This is a sidetext" />
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                         width={500}
                         height={400}
                         data={revenueExpensesData}
                         margin={{
-                            top: 10,
-                            right: 30,
-                            left: 0,
+                            top: 15,
+                            right: 25,
+                            left: -10,
                             bottom: 0,
                         }}
                     >
                         <defs>
                             <linearGradient id="colorRevenue" x1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor={palette.primary[400]} stopOpacity={0.5} />
-                                <stop offset="95%" stopColor={palette.primary[400]} stopOpacity={0} />
+                                <stop offset="5%" stopColor={palette.primary[300]} stopOpacity={0.5} />
+                                <stop offset="95%" stopColor={palette.secondary[400]} stopOpacity={0} />
+                            </linearGradient>
+                            <linearGradient id="colorExpenses" x1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor={palette.primary[300]} stopOpacity={0.5} />
+                                <stop offset="95%" stopColor={palette.secondary[400]} stopOpacity={0} />
                             </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="1 1" />
@@ -64,8 +93,66 @@ const Row1 = () => {
                     </AreaChart>
                 </ResponsiveContainer>
             </DashboardBox>
-            <DashboardBox gridArea="b"></DashboardBox>
-            <DashboardBox gridArea="c"></DashboardBox>
+
+            {/* B Dashboard */}
+
+            <DashboardBox gridArea="b">
+                <BoxHeader title="Profit and revenue" subtitle="This is a subtitle" sideText="This is a sidetext" />
+                <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                        width={500}
+                        height={400}
+                        data={profitRevenueData}
+                        margin={{
+                            top: 15,
+                            right: 25,
+                            left: -10,
+                            bottom: 0,
+                        }}
+                    >
+                        <defs>
+                            <linearGradient id="colorRevenue" x1="0" x2="0" y2="1">
+                                <stop offset="5%" stopColor={palette.primary[300]} stopOpacity={0.8} />
+                                <stop offset="95%" stopColor={palette.secondary[400]} stopOpacity={0} />
+                            </linearGradient>
+                        </defs>
+                        <CartesianGrid strokeDasharray="1 1" vertical={false} stroke={palette.grey[800]} />
+                        <XAxis dataKey="name" style={{ fontSize: "10px" }} />
+                        <YAxis yAxisId="left" axisLine={false} style={{ fontSize: "10px" }} ticks={[3000, 5000, 8000, 11000, 14000, 17000, 20000, 23000]} />
+                        <YAxis yAxisId="right" orientation="right" axisLine={false} style={{ fontSize: "10px" }} ticks={[3000, 5000, 8000, 11000, 14000, 17000, 20000, 23000]} />
+                        <Tooltip />
+                        <Legend height={20} wrapperStyle={{ margin: "0 0 10px 0" }} />
+                        <Line type="monotone" yAxisId="left" dataKey="profit" stroke={palette.primary.main} />
+                        <Line type="monotone" yAxisId="right" dataKey="revenue" stroke={palette.primary.main} />
+                    </LineChart>
+                </ResponsiveContainer>
+            </DashboardBox>
+
+            {/* C Dashboard */}
+
+
+            <DashboardBox gridArea="c">
+                <BoxHeader title="Month by Month" subtitle="This is a subtitle" sideText="This is a sidetext" />
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                        width={500}
+                        height={300}
+                        data={revenueData}
+                        margin={{
+                            top: 5,
+                            right: 30,
+                            left: 20,
+                            bottom: 5,
+                        }}
+                    >
+                        <CartesianGrid vertical={false} stroke={palette.grey[800]} />
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} style={{ fontSize: "10px" }} />
+                        <YAxis axisLine={false} tickLine={false} style={{ fontSize: "10px" }} />
+                        <Tooltip />
+                        <Bar dataKey="revenue" fill="url(#colorRevenue)" />
+                    </BarChart>
+                </ResponsiveContainer>
+            </DashboardBox>
         </>
     )
 }
