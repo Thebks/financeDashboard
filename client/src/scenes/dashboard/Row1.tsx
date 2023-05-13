@@ -71,7 +71,7 @@ const Row1 = () => {
                             top: 15,
                             right: 25,
                             left: -10,
-                            bottom: 0,
+                            bottom: 60,
                         }}
                     >
                         <defs>
@@ -84,7 +84,7 @@ const Row1 = () => {
                                 <stop offset="95%" stopColor={palette.secondary[400]} stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="1 1" />
+                        {/* <CartesianGrid strokeDasharray="1 1" /> */}
                         <XAxis dataKey="name" style={{ fontSize: "10px" }} />
                         <YAxis axisLine={{ strokeWidth: "0" }} style={{ fontSize: "10px" }} domain={[3000, 23000]} ticks={[3000, 5000, 8000, 11000, 14000, 17000, 20000, 23000]} />
                         <Tooltip />
@@ -107,7 +107,7 @@ const Row1 = () => {
                             top: 15,
                             right: 25,
                             left: -10,
-                            bottom: 0,
+                            bottom: 55,
                         }}
                     >
                         <defs>
@@ -142,7 +142,7 @@ const Row1 = () => {
                             top: 5,
                             right: 30,
                             left: 20,
-                            bottom: 5,
+                            bottom: 55,
                         }}
                     >
                         <CartesianGrid vertical={false} stroke={palette.grey[800]} />
