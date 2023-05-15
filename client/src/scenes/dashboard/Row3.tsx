@@ -1,31 +1,85 @@
+import BoxHeader from '@/components/BoxHeader'
 import DashboardBox from '@/components/DashboardBox'
-import { useGetTransactionsQuery } from '@/state/api'
+import { useGetKpisQuery, useGetProductsQuery, useGetTransactionsQuery } from '@/state/api'
+import { Palette } from '@mui/icons-material'
+import { Box, useTheme } from '@mui/material'
+import { DataGrid, GridCellParams } from '@mui/x-data-grid'
 import React from 'react'
 
 type Props = {}
 
 const Row3 = (props: Props) => {
 
-    const { data: transactionsData } = useGetTransactionsQuery();
-    console.log("transactionsData:", transactionsData);
+    const { palette } = useTheme();
+    const { data: kpiData } = useGetKpisQuery();
+    const { data: productData } = useGetProductsQuery();
+    const { data: transactionData } = useGetTransactionsQuery();
+    console.log("transactionData:", transactionData);
+    console.log("productData:", productData);
+    console.log("kpiData:", kpiData);
+
+    const productColumns = [
+        {
+            field: "_id",
+            headerName: "id",
+            flex: 1
+        },
+        {
+            field: "expense",
+            headerName: "Expense",
+            flex: 1,
+            renderCell: (params: GridCellParams) => `$${params.value}`,
+        },
+        {
+            field: "price",
+            headerName: "Price",
+            flex: 1,
+            renderCell: (params: GridCellParams) => `$${params.value}`,
+        }
+    ]
 
     return (
         <>
             <DashboardBox gridArea="g">
+                <BoxHeader title="This is the data grid" subtitle="" sideText={`${productData?.length} products`} />
 
-            </DashboardBox>
+                <Box
+                    mt="0.5rem"
+                    p="0 0.5rem"
+                    height="75%"
+                    sx={{
+                        "& .MuiDataGrid-root": {
+                            color: palette.grey[300],
+                            border: "none"
+                        },
+                        "& .MuiToolbar-root, & .MuiSvgIcon-root": {
+                            color: palette.grey[200]
+                        },
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: `1px solid ${palette.grey[800]} !important`
+                        },
+                    }}>
+                    <DataGrid
+                        columnHeaderHeight={25}
+                        rowHeight={35}
+                        hideFooter={false}
+                        columns={productColumns}
+                        rows={productData || []}
+                    />
+                </Box>
+            </DashboardBox >
 
             {/* H DASHBOARD */}
 
-            <DashboardBox gridArea="h"></DashboardBox>
+            < DashboardBox gridArea="h" ></DashboardBox >
 
             {/* I DASHBOARD */}
 
-            <DashboardBox gridArea="i"></DashboardBox>
+            < DashboardBox gridArea="i" ></DashboardBox >
 
             {/* J DASHBOARD */}
 
-            <DashboardBox gridArea="j"></DashboardBox>
+            < DashboardBox gridArea="j" ></DashboardBox >
         </>
     )
 }
