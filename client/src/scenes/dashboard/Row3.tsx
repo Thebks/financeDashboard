@@ -38,11 +38,35 @@ const Row3 = (props: Props) => {
         }
     ]
 
+    const transactionColumns = [
+        {
+            field: "_id",
+            headerName: "id",
+            flex: 1
+        },
+        {
+            field: "buyer",
+            headerName: "Buyer",
+            flex: 1
+        },
+        {
+            field: "amount",
+            headerName: "Amount",
+            flex: 1,
+            renderCell: (params: GridCellParams) => `$${params.value}`,
+        },
+        {
+            field: "productIds",
+            headerName: "Count",
+            flex: 1,
+            renderCell: (params: GridCellParams) => (params.value as Array<string>).length
+        }
+    ]
+
     return (
         <>
             <DashboardBox gridArea="g">
                 <BoxHeader title="This is the data grid" subtitle="" sideText={`${productData?.length} products`} />
-
                 <Box
                     mt="0.5rem"
                     p="0 0.5rem"
@@ -71,7 +95,33 @@ const Row3 = (props: Props) => {
 
             {/* H DASHBOARD */}
 
-            < DashboardBox gridArea="h" ></DashboardBox >
+            < DashboardBox gridArea="h" >
+                <BoxHeader title="Latest Orders" subtitle="" sideText={`${transactionData?.length} Recent Transactions`} />
+                <Box
+                    mt="1rem"
+                    p="0 0.5rem"
+                    height="80%"
+                    sx={{
+                        "& .MuiDataGrid-root": {
+                            color: palette.grey[300],
+                            border: "none"
+                        },
+                        "& .MuiToolbar-root, & .MuiSvgIcon-root": {
+                            color: palette.grey[200]
+                        },
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: `1px solid ${palette.grey[800]} !important`
+                        },
+                    }}>
+                    <DataGrid
+                        columnHeaderHeight={25}
+                        rowHeight={35}
+                        hideFooter={false}
+                        columns={transactionColumns}
+                        rows={transactionData || []}
+                    />
+                </Box>
+            </DashboardBox >
 
             {/* I DASHBOARD */}
 
