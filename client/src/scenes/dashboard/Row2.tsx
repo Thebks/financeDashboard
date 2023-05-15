@@ -2,9 +2,9 @@ import BoxHeader from '@/components/BoxHeader'
 import DashboardBox from '@/components/DashboardBox'
 import { useGetKpisQuery, useGetProductsQuery } from '@/state/api'
 // import { useTheme } from '@emotion/react'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Box, Typography, useTheme } from "@mui/material"
-import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, Cell, Pie, PieChart } from 'recharts'
+import { ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line, Cell, Pie, PieChart, Scatter, ScatterChart } from 'recharts'
 import FlexBetween from '@/components/FlexBetween'
 
 type Props = {}
@@ -20,6 +20,7 @@ const Row2 = (props: Props) => {
     const { data: operationalData } = useGetKpisQuery();
     // console.log('data:', data)
 
+
     const operations = useMemo(() => {
         return (
             operationalData &&
@@ -32,6 +33,20 @@ const Row2 = (props: Props) => {
             })
         )
     }, [operationalData])
+
+
+    const productExpenseData = useMemo(() => {
+        return (
+            productData &&
+            productData.map(({ _id, price, expense }) => {
+                return {
+                    id: _id,
+                    price: price,
+                    expense: expense,
+                }
+            })
+        )
+    }, [productData])
 
     return (
         <>
@@ -79,21 +94,19 @@ const Row2 = (props: Props) => {
                             top: 0,
                             right: -10,
                             left: 10,
-                            bottom: 0,
+                            bottom: 20,
                         }}
-                        onMouseEnter={this.onPieEnter}
                     >
                         <Pie
                             data={pieData}
-                            cx={120}
-                            cy={200}
+                            stroke="none"
                             innerRadius={18}
                             outerRadius={38}
                             paddingAngle={2}
                             dataKey="value"
                         >
                             {pieData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={pieColors[index]} />
+                                <Cell key={`cell - ${index}`} fill={pieColors[index]} />
                             ))}
                         </Pie>
                     </PieChart>
@@ -121,7 +134,41 @@ const Row2 = (props: Props) => {
 
             {/* F DASHBOARD */}
 
-            <DashboardBox gridArea="f"></DashboardBox>
+            <DashboardBox gridArea="f">
+                <BoxHeader title="This is a sacttered Chart" subtitle="this is the sub" sideText="this is the sideText" />
+                <ResponsiveContainer width="100%" height="100%">
+                    <ScatterChart
+                        margin={{
+                            top: 20,
+                            right: 25,
+                            bottom: 60,
+                            left: -10,
+                        }}
+                    >
+                        <CartesianGrid stroke={palette.grey[800]} />
+                        <XAxis
+                            type="number"
+                            dataKey="price"
+                            name="price"
+                            axisLine={false}
+                            tickLine={false}
+                            style={{ fontSize: "10px" }}
+                            tickFormatter={(v) => `$${v}`}
+                        />
+                        <YAxis
+                            type="number"
+                            dataKey="expense"
+                            name="expense"
+                            axisLine={false}
+                            tickLine={false}
+                            style={{ fontSize: "10px" }}
+                            tickFormatter={(v) => `$${v}`}
+                        />
+                        <Tooltip cursor={{ strokeDasharray: '3 3' }} formatter={(v) => `$${v}`} />
+                        <Scatter name="Expense ratio" data={productExpenseData} fill="#8884d8" />
+                    </ScatterChart>
+                </ResponsiveContainer>
+            </DashboardBox >
         </>
     )
 }
