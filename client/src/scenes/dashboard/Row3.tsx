@@ -166,7 +166,7 @@ const Row3 = (props: Props) => {
                                         ))}
                                     </Pie>
                                 </PieChart>
-                                <Typography variant="h5">{data[0].name}</Typography>
+                                <Typography variant="h5">{data[0].name}</Typography>   {/* Seems to have a problem in this line*/}
                             </Box>
                         )
                     })}
@@ -175,7 +175,25 @@ const Row3 = (props: Props) => {
 
             {/* J DASHBOARD */}
 
-            < DashboardBox gridArea="j" ></DashboardBox >
+            <DashboardBox gridArea="j" >
+                <BoxHeader title="Overall Summary and Data" sideText="+15%" subtitle={''} />
+                <Box
+                    height="15px"
+                    margin="1.25rem 1rem 0.4rem 1rem"
+                    bgcolor={palette.primary[800]}
+                    borderRadius="1rem"
+                >
+                    <Box
+                        height="15px"
+                        bgcolor={palette.primary[600]}
+                        borderRadius="1rem"
+                        width="40%"
+                    ></Box>
+                </Box>
+                <Typography margin="0 1rem" variant="h6">
+                    Some test to explain the stuff...
+                </Typography>
+            </DashboardBox >
         </>
     )
 }
